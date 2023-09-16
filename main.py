@@ -1,16 +1,9 @@
 import pyttsx3
 import os
 
-
-
-
-
 # map id to get nameTh
 # generate with all emotion
 # filename as id_nameTH_emotionEN
-
-
-
 # Generate for 1 Person get all emotion
 def Generate_AudioFile(id: str,name_EN: str,name_TH:str):
     engine = pyttsx3.init()
@@ -25,13 +18,13 @@ def Generate_AudioFile(id: str,name_EN: str,name_TH:str):
     # name = "ดร. สุวัจชัย"
     # emotion = "อารมณ์ดีนะ"
     # name_th = []
-    dirname = f"./new_speech/{name_EN}"
+    dirname = f"./new_speech/{id}_{name_EN}"
     if os.path.exists(dirname):
         os.rmdir(dirname)
-    os.mkdir(f"./new_speech/{name_EN}")
+    os.mkdir(dirname)
     for i ,v in enumerate(emotion_th):
         speech = f"สวัสดี คุณ{name_TH} วันนี้ {v}"
-        filepath = f"./new_speech/{name_EN}/{id}_{emotion_en[i]}.mp3"
+        filepath = f"{dirname}/{emotion_en[i]}.mp3"
         engine.save_to_file(speech, filepath)
         # engine.say(speech)
         print(f"{i} || {v}")
@@ -69,7 +62,4 @@ if __name__ == "__main__":
         name = x[1]
         if id not in name_dict:
             continue
-        Generate_AudioFile(id,name_EN=name,name_TH=name_dict[id])
-
-        
-    
+        Generate_AudioFile(id = id,name_EN=name,name_TH=name_dict[id])
