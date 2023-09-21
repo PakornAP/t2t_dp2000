@@ -6,23 +6,18 @@ import shutil
 # generate with all emotion
 # filename as id_nameTH_emotionEN
 # Generate for 1 Person get all emotion
-def Generate_AudioFile(id: str,name_EN: str,name_TH:str):
+def Generate_AudioFile(dirname: str,name_TH:str, emotionList_en:[str] , emotionList_th : [str]):
     engine = pyttsx3.init()
     TH_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_THAI"
-
-    emotion_en = ["angry" , "disgust", "fear" , "happy", "sad" , "suprise", "neutral"]
-    emotion_th = ["คุณโกรธอะไรมาหรือป่าว" , "สีหน้าของคุณดูไม่ค่อยดีเลยนะ" , "คุณดูตื่นกลัวนะ" , "คุณดูมีความสุขมากนะ", "คุณเป็นอะไรหรือเปล่า ดูเศร้าๆนะ", "คุณดูตกใจนะ", "ขอให้เป็นวันที่ดีนะ"]
     engine.setProperty('volume', 0.9)  # Volume 0-1
     engine.setProperty('rate', 130)  #148
-
     engine.setProperty('voice', TH_voice_id)
-    dirname = f"./new_speech/{id}_{name_EN}"
     if os.path.exists(dirname):
         shutil.rmtree(dirname)
     os.mkdir(dirname)
-    for i ,v in enumerate(emotion_th):
-        speech = f"สวัสดี คุณ{name_TH} วันนี้ {v}"
-        filepath = f"{dirname}/{emotion_en[i]}.mp3"
+    for i ,word in enumerate(emotionList_th):
+        speech = f"สวัสดี  {name_TH} วันนี้ {word}"
+        filepath = f"{dirname}/{emotionList_en[i]}.mp3"
         engine.save_to_file(speech, filepath)
     engine.runAndWait()
     return
@@ -53,7 +48,7 @@ if __name__ == "__main__":
         "28" : "ณิชาภา",
         "29" : "ทักศินา",
         "30" : "ธนภร",
-        "31" : "พัททพล",
+        "31" : "พัททะพล",
         "32" : "มิรา",
         "33" : "สุมิตรา",
         "34" : "เกื้อกูล",
@@ -61,13 +56,15 @@ if __name__ == "__main__":
         "36" : "ธราดล",
         "38" : "พลฉัตร",
         "40" : "พิระพัก",
-        "42" : "ดร. นิกรณ์",
+        "42" : "ดร. นิกร",
         "43" : "ดร. ลือพล",
         "44" : "ดร. สุวัจชัย",
         "45" : "กรพิสิท",
         "48" : "ธวัชชัย",
         "49" : "พัทระพูม",
     }
+    emotion_en = ["angry" , "disgust", "fear" , "happy", "sad" , "suprise", "neutral"]
+    emotion_th = ["คุณโกรธอะไรมาหรือป่าว" , "สีหน้าของคุณดูไม่ค่อยดีเลยนะ" , "คุณดูตื่นกลัวนะ" , "คุณดูมีความสุขมากนะ", "คุณเป็นอะไรหรือเปล่า ดูเศร้าๆนะ", "คุณดูตกใจนะ", "ขอให้เป็นวันที่ดีนะ"]
     arr_raw = os.listdir("./database")
     for v in arr_raw:
         x = v.split("_")
@@ -75,5 +72,7 @@ if __name__ == "__main__":
         name = x[1]
         if id not in name_dict:
             continue
-        Generate_AudioFile(id = id,name_EN=name,name_TH=name_dict[id])
+        dirname = f"./new_speech/{id}_{name}"
+        Generate_AudioFile(dirname=dirname,name_TH="คุณ"+name_dict[id],emotionList_en=emotion_en, emotionList_th=emotion_th)
+    Generate_AudioFile(dirname=f"./new_speech/stranger", name_TH="",emotionList_en=emotion_en,emotionList_th=emotion_th)
     GenerateDefaultAudio()
