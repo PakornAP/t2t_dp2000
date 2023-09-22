@@ -18,7 +18,7 @@ def Generate_AudioFile(dirname: str,name_TH:str, emotionList_en:[str] , emotionL
     os.mkdir(dirname)
     for i ,val in enumerate(emotionList_th):
         rand = random.randint(0,2)
-        speech = f"สวัสดี  {name_TH} วันนี้ {val[rand]}"
+        speech = f"สวัสดี {name_TH} วันนี้ {val[rand]}"
         filepath = f"{dirname}/{emotionList_en[i]}.mp3"
         print( i , " || ", speech)
         engine.save_to_file(speech, filepath)
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     emotion_en = ["Happy" , "Sad", "Surprise" , "Neutral", "Angry" , "Fear"]
     emotion_th = ["คุณโกรธอะไรมาหรือป่าว", "คุณดูตื่นกลัวนะ" , "คุณดูมีความสุขมากนะ", "คุณเป็นอะไรหรือเปล่า ดูเศร้าๆนะ", "คุณดูตกใจนะ", "ขอให้เป็นวันที่ดีนะ"]
     emotionTH = [ 
-        ["อารมณ์ดีนะครับ"	,"ดูแจ่มใสนะครับวันนี้"	,"ดูสดชื่นดีจังครับ"],
+        ["อารมณ์ดีนะครับ"	,"ดูแจ่มใสนะครับ"	,"ดูสดชื่นดีจังครับ"],
         ["ดูแลสุขภาพด้วยนะครับ",	"อย่าลืมทานข้าวให้ตรงเวลานะครับ",	"ดูแลจิตใจตัวเองด้วยนะครับ"],
         ["มีเรื่องให้ตื่นเต้นหรอครับ",	"กำลังลุ้นอะไรอยู่หรอครับ",	"ดูมีชีวิตชีวานะครับ"],
         ["ขอให้เป็นวันที่ดีนะครับ","อย่าลืมออกกำลังกายบ้างนะครับ","ดูสบายๆนะครับ"],
